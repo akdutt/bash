@@ -1,0 +1,12 @@
+#!/bin/sh
+#AND LIST
+
+touch file_one file_two
+rm -f file_two
+if [ -f file_one ] && echo "hello" && [ -f file_two ] && echo "there"
+then
+echo "in if"
+else
+echo "in else"
+fi
+exit 0

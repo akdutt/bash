@@ -1,0 +1,60 @@
+selinux: security enhaced linux
+implementation of medatory ACL mechanisms in linux control
+
+Acess controls:
+Discretionary : depend upon users thinking and knowledge/wisdom
+SELINUX set of predefined policies about what who where when should be done.
+
+
+services use files and dirs.
+#getenforce: status of SELinux: enforced/permissive
+
+/var/ftp  doc root of FTP
+/var/www/html  doc root of apache
+if we try to change this,(that read from any othr file/dir) SElinux wont allow.
+
+Context:is basically a label
+file/dirs/processes/services all have contexts/labels.
+
+ls -ld /root  (wont display context)
+ls -ldZ /root(or any other dir)   it will display context .
+system_u     object_r    t                    sr0
+system user       role   target mode     security level
+admin_home_t
+
+
+#ps -efZ
+# systemctl restart httpd
+#ps -efZ|grep http
+httpd_sys_content
+
+SELINUX: permissive/enforced.
+permissive: in trouble shooting .. allows access/ allows to cahnge ... but it will log everything which it would have denied in case of enforced.
+
+
+#getsebool -a    display all the SElinux boolean variables and their current value.
+
+TO CHANGE:
+#setenforce [enforcing|permissive|0|1]
+#setenforce 0      sets the value to permissive.
+
+conf file:controls the state of SElinux on system.
+ /etc/selinux/config. read at boot time.
+
+CHANGING SELINUX CONTEXT of a file:
+#mkdir /virtual
+# ls -ldZ /virtual
+u:object r_default
+
+#chcon -t httpd_sys_content_t /virtual
+again check to varify.
+
+to reset the value.. # restorecon -v /virtual
+
+#setsebool ftp_home_dir on
+
+/var/log/audit/audit.log    stores the SElinux vioation.
+
+
+
+
